@@ -1,0 +1,32 @@
+﻿@model UserBlogViewModel
+@{
+    ViewData["Title"] = "My Blogs";
+}
+
+<div class="d-flex justify-content-between">
+    <div><h1>@ViewData["Title"]</h1></div>
+    <div><a asp-action="Create" class="btn btn-primary">Create</a></div>
+</div>
+
+@if (Model != null)
+{
+    foreach (var blog in Model.Blogs)
+    {
+        <div class="card mt-3">
+            <div class="card-header">
+                <div>@blog.DatePublished.ToString(format: "dddd, MMMM MM, yyyy")</div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@blog.Title</h5>
+                <a asp-action="Details" asp-route-id="@blog.Id" class="btn btn-info"> View </a>
+                <a asp-action="Edit" asp-route-id="@blog.Id" class="btn btn-primary"> Edit </a>
+                <a asp-action="Delete" asp-route-id="@blog.Id" class="btn btn-danger"> Delete </a>
+            </div>
+        </div>
+    }
+}
+<div page-model="@Model?.PagingInfo" page-action="Index" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>
+

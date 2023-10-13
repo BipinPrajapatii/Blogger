@@ -1,0 +1,35 @@
+﻿@* @model IEnumerable<BlogViewModel> *@
+@model UserBlogViewModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+@if (!string.IsNullOrEmpty(Model.SearchFor))
+{
+    <h2>Search For : @Model.SearchFor</h2>
+}
+
+@if (Model.Blogs != null)
+{
+    foreach (var blog in Model.Blogs)
+    {
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>@blog.DatePublished.ToString(format: "dddd, MMMM MM, yyyy")</div>
+                    <div>Posted By : @blog.CreatedBy</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@blog.Title</h5>
+                <a asp-action="Details" asp-controller="Blog" asp-route-id="@blog.Id" class="stretched-link"></a>
+            </div>
+        </div>
+    }
+}
+
+@* <div page-model="@Model?.PagingInfo" page-action="Index"></div> *@
+<div page-model="@Model?.PagingInfo" page-action="Search" search-for="@Model.SearchFor" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>

@@ -1,0 +1,39 @@
+﻿@model BlogSaveModel
+@{
+    ViewData["Title"] = "Blog Details";
+    bool isDeleteAction = ViewBag.IsDeleteAction ?? false;
+}
+@if (isDeleteAction)
+{
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Alert!</h4>
+        <p>Are soure you want to delete ?</p>
+        <hr>
+        <div class="d-flex flex-row-reverse">
+            <form asp-action="Delete">
+                <input name="id" type="hidden" value="@Model.Id" />
+                <input name="isConfirm" type="hidden" value="True" />
+                <button type="submit" class="btn btn-primary">Yes</button>
+            </form>                     
+            <form asp-action="Delete">
+                <input name="id" type="hidden" value="@Model.Id" />
+                <input name="isConfirm" type="hidden" value="False" />
+                <button type="submit" class="btn btn-secondary mx-3">No</button>
+            </form>
+        </div>
+    </div>
+}
+
+<div class="card mt-3">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h2>@Model.Title</h2>
+            <div>@Model.DatePublished.ToString(format: "dddd, MMMM MM, yyyy")</div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div>
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+</div>
